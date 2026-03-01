@@ -1,0 +1,42 @@
+#include <iostream>
+using namespace std;
+
+struct Elemen {
+    int isi;
+    Elemen* nextNode;
+};
+
+Elemen* awalData = nullptr;
+
+void buatDataPertama(int angka) {
+    if (awalData == nullptr) {
+        Elemen* simpul = new Elemen;
+        simpul->isi = angka;
+        simpul->nextNode = nullptr;
+        awalData = simpul;
+        cout << "Data pertama berhasil dimasukkan.\n";
+    } else {
+        cout << "List sudah terisi.\n";
+    }
+}
+
+void cetak() {
+    Elemen* cek = awalData;
+    while (cek != nullptr) {
+        cout << cek->isi << " -> ";
+        cek = cek->nextNode;
+    }
+    cout << "NULL\n";
+}
+
+int main() {
+    int angka;
+
+    cout << "Masukkan angka untuk node pertama: ";
+    cin >> angka;
+
+    buatDataPertama(angka);
+    cetak();
+
+    return 0;
+}

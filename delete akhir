@@ -1,0 +1,84 @@
+#include <iostream>
+using namespace std;
+
+struct Elemen {
+    int isi;
+    Elemen* nextNode;
+};
+
+Elemen* awalData = nullptr;
+
+void tambahAkhir(int angka) {
+    Elemen* simpul = new Elemen;
+    simpul->isi = angka;
+    simpul->nextNode = nullptr;
+
+    if (awalData == nullptr) {
+        awalData = simpul;
+        return;
+    }
+
+    Elemen* jalan = awalData;
+    while (jalan->nextNode != nullptr)
+        jalan = jalan->nextNode;
+
+    jalan->nextNode = simpul;
+}
+
+void hapusAkhir() {
+    if (awalData == nullptr) {
+        cout << "List kosong, tidak bisa dihapus.\n";
+        return;
+    }
+
+    if (awalData->nextNode == nullptr) {
+        delete awalData;
+        awalData = nullptr;
+        cout << "Node terakhir berhasil dihapus.\n";
+        return;
+    }
+
+    Elemen* jalan = awalData;
+
+    while (jalan->nextNode->nextNode != nullptr) {
+        jalan = jalan->nextNode;
+    }
+
+    Elemen* hapus = jalan->nextNode;   
+    jalan->nextNode = nullptr;         
+    delete hapus;                      
+
+    cout << "Node terakhir berhasil dihapus.\n";
+}
+
+void tampil() {
+    Elemen* jalan = awalData;
+    while (jalan != nullptr) {
+        cout << jalan->isi << " -> ";
+        jalan = jalan->nextNode;
+    }
+    cout << "NULL\n";
+}
+
+int main() {
+    int jumlah, angka;
+
+    cout << "Berapa data awal? ";
+    cin >> jumlah;
+
+    for(int i = 0; i < jumlah; i++) {
+        cout << "Masukkan data ke-" << i+1 << ": ";
+        cin >> angka;
+        tambahAkhir(angka);
+    }
+
+    cout << "\nIsi Linked List sebelum delete:\n";
+    tampil();
+
+    hapusAkhir();
+
+    cout << "\nIsi Linked List setelah delete akhir:\n";
+    tampil();
+
+    return 0;
+}

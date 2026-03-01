@@ -1,0 +1,55 @@
+#include <iostream>
+using namespace std;
+
+struct Elemen {
+    int isi;
+    Elemen* nextNode;
+};
+
+Elemen* awalData = nullptr;
+
+void tambahAkhir(int angka) {
+    Elemen* simpulBaru = new Elemen;   
+    simpulBaru->isi = angka;           
+    simpulBaru->nextNode = nullptr;    
+
+    if (awalData == nullptr) {         
+        awalData = simpulBaru;
+        return;
+    }
+
+    Elemen* telusur = awalData;
+
+    while (telusur->nextNode != nullptr) {  
+        telusur = telusur->nextNode;
+    }
+
+    telusur->nextNode = simpulBaru;   
+}
+
+void tampil() {
+    Elemen* jalan = awalData;
+    while (jalan != nullptr) {
+        cout << jalan->isi << " -> ";
+        jalan = jalan->nextNode;
+    }
+    cout << "NULL\n";
+}
+
+int main() {
+    int jumlah, angka;
+
+    cout << "Berapa data yang ingin dimasukkan di akhir? ";
+    cin >> jumlah;
+
+    for(int i = 0; i < jumlah; i++) {
+        cout << "Masukkan angka ke-" << i+1 << ": ";
+        cin >> angka;
+        tambahAkhir(angka);
+    }
+
+    cout << "\nIsi Linked List:\n";
+    tampil();
+
+    return 0;
+}

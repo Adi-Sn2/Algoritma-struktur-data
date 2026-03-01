@@ -1,0 +1,43 @@
+#include <iostream>
+using namespace std;
+
+struct Elemen {
+    int isi;
+    Elemen* nextNode;
+};
+
+Elemen* awalData = nullptr;
+
+void tambahAwal(int angka) {
+    Elemen* simpulBaru = new Elemen;   
+    simpulBaru->isi = angka;           
+    simpulBaru->nextNode = awalData;   
+    awalData = simpulBaru;             
+}
+
+void tampilkan() {
+    Elemen* penunjuk = awalData;
+    while (penunjuk != nullptr) {
+        cout << penunjuk->isi << " -> ";
+        penunjuk = penunjuk->nextNode;
+    }
+    cout << "NULL\n";
+}
+
+int main() {
+    int jumlah, angka;
+
+    cout << "Berapa data yang ingin dimasukkan di awal? ";
+    cin >> jumlah;
+
+    for(int i = 0; i < jumlah; i++) {
+        cout << "Masukkan angka ke-" << i+1 << ": ";
+        cin >> angka;
+        tambahAwal(angka);
+    }
+
+    cout << "\nIsi Linked List:\n";
+    tampilkan();
+
+    return 0;
+}

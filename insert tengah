@@ -1,0 +1,82 @@
+#include <iostream>
+using namespace std;
+
+struct Elemen {
+    int isi;
+    Elemen* nextNode;
+};
+
+Elemen* awalData = nullptr;
+
+void tambahBelakang(int angka) {
+    Elemen* simpul = new Elemen;
+    simpul->isi = angka;
+    simpul->nextNode = nullptr;
+
+    if (awalData == nullptr) {
+        awalData = simpul;
+        return;
+    }
+
+    Elemen* jalan = awalData;
+    while (jalan->nextNode != nullptr)
+        jalan = jalan->nextNode;
+
+    jalan->nextNode = simpul;
+}
+
+void tambahSetelah(int target, int angkaBaru) {
+    Elemen* cari = awalData;
+
+    while (cari != nullptr && cari->isi != target)
+        cari = cari->nextNode;
+
+    if (cari == nullptr) {
+        cout << "Data target tidak ditemukan!\n";
+        return;
+    }
+
+    Elemen* simpulBaru = new Elemen;           
+    simpulBaru->isi = angkaBaru;               
+    simpulBaru->nextNode = cari->nextNode;     
+    cari->nextNode = simpulBaru;               
+}
+
+void tampil() {
+    Elemen* jalan = awalData;
+    while (jalan != nullptr) {
+        cout << jalan->isi << " -> ";
+        jalan = jalan->nextNode;
+    }
+    cout << "NULL\n";
+}
+
+int main() {
+    int jumlah, angka;
+
+    cout << "Berapa data awal? ";
+    cin >> jumlah;
+
+    for(int i = 0; i < jumlah; i++) {
+        cout << "Masukkan data ke-" << i+1 << ": ";
+        cin >> angka;
+        tambahBelakang(angka);
+    }
+
+    cout << "\nIsi awal list:\n";
+    tampil();
+
+    int target, dataBaru;
+    cout << "\nMasukkan angka yang ingin disisipkan setelah nilai: ";
+    cin >> target;
+
+    cout << "Masukkan angka baru: ";
+    cin >> dataBaru;
+
+    tambahSetelah(target, dataBaru);
+
+    cout << "\nSetelah insert tengah:\n";
+    tampil();
+
+    return 0;
+}
